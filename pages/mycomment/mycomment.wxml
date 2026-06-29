@@ -1,0 +1,47 @@
+<!-- pages/my-comments/my-comments.wxml -->
+<view class="container">
+  <!-- 评论列表 -->
+  <block wx:if="{{showComment}}">
+    <view class="comment-list">
+      <!-- 循环遍历展示我们的评论数组comments，item表示数组中的元素 -->
+      <block wx:for="{{comments}}">
+        <view class="comment-item">
+          <!-- 顶部信息 -->
+          <view class="comment-header">
+            <text class="order-no">订单号：{{item.orderId}}</text>
+            <text class="comment-time">{{item.createTime}}</text>
+          </view>
+
+          <!-- 评分 -->
+          <view class="star-rating">
+            <block wx:for="{{item.score}}" wx:key="index">
+              <image 
+                src="/assets/icons/star-full.png"
+                class="star-icon"
+              />
+            </block>
+          </view>
+
+          <!-- 评论内容 -->
+          <view class="comment-content">{{item.comment}}</view>
+
+          <!-- 删除按钮 -->
+          <view class="action-bar">
+            <image 
+              src="/assets/icons/delete.png" 
+              class="delete-icon"
+            />
+          </view>
+        </view>
+      </block>
+    </view>
+  </block>
+
+  <!-- 空状态 -->
+  <block wx:else>
+    <view class="empty">
+      <image src="/assets/icons/comment-empt.png" class="empty-icon"/>
+      <text class="empty-text">暂无评论记录</text>
+    </view>
+  </block>
+</view>

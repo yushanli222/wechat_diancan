@@ -1,0 +1,72 @@
+<!-- 顶部导航栏 -->
+<view class="header">
+  <text class="shop-name">{{shopInfo.name}}</text>
+  <image src="/assets/icons/bell.png" class="icon-bell"/>
+</view>
+
+<!-- 搜索框 -->
+<view class="search-container">
+  <view class="search-box">
+    <image bindtap="handleToMenu" src="/assets/icons/search.png" class="icon-search"/>
+    <input 
+      placeholder="搜索菜品/套餐" 
+      placeholder-class="placeholder-style"
+      bindinput="getKeyWord"
+    />
+  </view>
+</view>
+
+<!-- 扫码功能入口 -->
+<view class="scan-section">
+  <view class="scan-card">
+    <!-- 微信小程序中点击事件是通过bindtap属性来实现的 -->
+    <image src="/assets/icons/scan.png" bindtap="handleToScan" class="icon-scan"/>
+    <text class="scan-text">扫一扫点餐</text>
+  </view>
+</view>
+
+<!-- 推荐菜品 -->
+<view class="section">
+  <view class="section-header">
+    <text class="section-title">店长推荐</text>
+    <text class="section-more" bindtap="goToMenu">查看更多</text>
+  </view>
+  <scroll-view class="food-scroll" scroll-x enable-flex>
+    <view class="food-list">
+      <view class="food-card" wx:for="{{recommendFoods}}" wx:key="fid">
+        <image src="{{item.imgPath}}" class="food-image"/>
+        <view class="food-info">
+          <text class="food-name">{{item.fname}}</text>
+          <text class="food-intro">{{item.intro}}</text>
+          <view class="food-price-row">
+            <text class="food-price">¥{{item.price}}</text>
+            <text class="food-tag">推荐</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 最新菜品 -->
+<view class="section">
+  <view class="section-header">
+    <text class="section-title">新品上市</text>
+    <text class="section-more" bindtap="goToMenu">查看更多</text>
+  </view>
+  <scroll-view class="food-scroll" scroll-x enable-flex>
+    <view class="food-list">
+      <view class="food-card" wx:for="{{latestFoods}}" wx:key="fid">
+        <image src="{{item.imgPath}}" class="food-image"/>
+        <view class="food-info">
+          <text class="food-name">{{item.fname}}</text>
+          <text class="food-intro">{{item.intro}}</text>
+          <view class="food-price-row">
+            <text class="food-price">¥{{item.price}}</text>
+            <text class="food-tag new">新品</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

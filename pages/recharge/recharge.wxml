@@ -1,0 +1,16 @@
+<view class="recharge-container">
+  <view class="amount-list">
+    <block wx:for="{{amounts}}" wx:key="index">
+      <view 
+        class="amount-item {{selectedIndex === index ? 'active' : ''}}"
+        bindtap="selectAmount"
+        data-index="{{index}}">
+
+        <text>¥{{item}}</text>
+
+      </view>
+    </block>
+  </view>
+  
+  <button class="recharge-btn" bindtap="handleToRecharge">立即充值</button>
+</view>

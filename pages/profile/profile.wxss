@@ -1,0 +1,93 @@
+/* 用户信息卡片 */
+.user-card {
+    background: #fff;
+    padding: 40rpx;
+    margin: 30rpx;
+    border-radius: 20rpx;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.06);
+  }
+  
+  .user-avatar {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 50%;
+    margin-right: 30rpx;
+  }
+  .user-code{
+    width: 120rpx;
+    height: 120rpx;
+    padding-left: 100rpx;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-name {
+    font-size: 36rpx;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10rpx;
+  }
+  
+  .user-balance {
+    font-size: 28rpx;
+    color: #666;
+  }
+  
+  /* 登录按钮 */
+  .login-btn {
+    background: #09BB07;
+    border-radius: 50rpx;
+    color: #fff;
+    padding: 20rpx 40rpx;
+    display: flex;
+    align-items: center;
+    font-size: 32rpx;
+    line-height: 1;
+  }
+  
+  .wechat-icon {
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 20rpx;
+  }
+  
+  /* 功能列表 */
+  .menu-list {
+    margin: 30rpx;
+    background: #fff;
+    border-radius: 20rpx;
+    overflow: hidden;
+  }
+  
+  .menu-item {
+    padding: 30rpx;
+    display: flex;
+    align-items: center;
+    border-bottom: 1rpx solid #eee;
+  }
+  
+  .menu-icon {
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 20rpx;
+  }
+  
+  .arrow-icon {
+    width: 32rpx;
+    height: 32rpx;
+    margin-left: auto;
+  }
+  
+  /* 自定义客服按钮 */
+  .custom-service-btn {
+    position: fixed;
+    right: 40rpx;
+    bottom: 200rpx;
+    width: 120rpx;
+    height: 120rpx;
+  }

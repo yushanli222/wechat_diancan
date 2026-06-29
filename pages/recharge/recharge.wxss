@@ -1,0 +1,70 @@
+/* 充值页面容器 */
+.recharge-container {
+    padding: 40rpx 30rpx;
+    min-height: 100vh;
+    background: #f8f8f8;
+  }
+  
+  /* 金额选择列表 */
+  .amount-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30rpx;
+    margin-bottom: 60rpx;
+  }
+  
+  /* 单个金额选项 */
+  .amount-item {
+    background: #ffffff;
+    border: 2rpx solid #eeeeee;
+    border-radius: 16rpx;
+    padding: 40rpx 20rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  
+  .amount-item text {
+    font-size: 36rpx;
+    color: #333333;
+    font-weight: 500;
+  }
+  
+  /* 选中状态 */
+  .amount-item.active {
+    border-color: #07c160;
+    background: rgba(7, 193, 96, 0.08);
+    transform: scale(0.98);
+  }
+  
+  .amount-item.active text {
+    color: #07c160;
+  }
+  
+  /* 充值按钮 */
+  .recharge-btn {
+    width: 90%;
+    margin: 0 auto;
+    background: #07c160;
+    color: #ffffff;
+    border-radius: 50rpx;
+    font-size: 34rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    box-shadow: 0 6rpx 20rpx rgba(7, 193, 96, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .recharge-btn:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+  
+  /* 金额提示文字 */
+  .recharge-tips {
+    text-align: center;
+    color: #999999;
+    font-size: 28rpx;
+    margin: 40rpx 0;
+  }

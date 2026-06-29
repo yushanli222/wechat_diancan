@@ -1,0 +1,164 @@
+<!--头部  -->
+<view class="page cont_box">
+  <view class="weui-panel__bd posi_fiexd">
+    <navigator url="" class="weui-media-box weui-media-box_appmsg new_padd  bc_green" hover-class="weui-cell_active">
+      <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+        <image class="weui-media-box__thumb bd_radius" src="/assets/icons/hi.jpg" />
+      </view>
+      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+        <view class="weui-media-box__title  color_white">饿了么</view>
+        <view class="weui-media-box__desc color_white">下单页面</view>
+      </view>
+    </navigator>
+  </view>
+  <!--内容  -->
+  <view class="weui-panel bc_white weui-panel_box">
+    <view class="weui-panel__hd weui_titleBox">{{tableid}}号桌</view>
+    <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_small-appmsg">
+        <!-- wx:for是用于循环遍历的 -->
+        <view wx:for="{{cartList}}" class="weui-cells weui-cells_in-small-appmsg">
+          <navigator url="" class="weui-cell weui-cell_access weui_orderBox" hover-class="weui-cell_active">
+            <view class="weui-cell__hd">
+            </view>
+            <view class="weui-cell__bd weui-cell_primary">
+              <view>{{item.name}}</view>
+            </view>
+            <view class="weui-cell__ft order_price">x{{item.quantity}}，￥{{item.price * item.quantity}}</view>
+          </navigator>
+        </view>
+      </view>
+    </view>
+    <view class="weui-panel__hd order_sum">合计：<span class="order_sumMoney">{{totalPrice}}元，{{totalCount}}份</span></view>
+  </view>
+  <!--输入用餐人数  -->
+  <view class="fenxi"></view>
+  用餐人数:<input class="guest_numInput bc_white" focus="{{diner_numF}}" placeholder="请输入用餐人数" type="number" bindinput="handleToDinerNum" value="{{diner_num}}" wx:if="{{diner_num > 0 }}"/>
+  <input class="guest_numInput bc_white" focus="{{diner_numF}}" placeholder="请输入用餐人数" type="number" bindinput="handleToDinerNum" value="{{diner_num}}" wx:else/>
+  <view class="guest_numBox">
+    <view class="weui-flex">
+      <view class="weui-flex__item">
+        <view class="guest_num_choose" data-num="1" bindtap="getDinnerNUM">1</view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="guest_num_choose" data-num="2" bindtap="getDinnerNUM">2</view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="guest_num_choose" data-num="3" bindtap="getDinnerNUM">3</view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="guest_num_choose" data-num="4" bindtap="getDinnerNUM">4</view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="guest_num_choose" data-num="5" bindtap="getDinnerNUM">5</view>
+      </view>
+    </view>
+    <view class="weui-flex weui-flex-bottom">
+      <view class="weui-flex__item">
+        <view class="guest_num_choose" data-num="6" bindtap="getDinnerNUM">6</view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="guest_num_choose" data-num="7" bindtap="getDinnerNUM">7</view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="guest_num_choose" data-num="8" bindtap="getDinnerNUM">8</view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="guest_num_choose" data-num="9" bindtap="getDinnerNUM">9</view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="guest_num_choose" data-num="10" bindtap="getDinnerNUM">10</view>
+      </view>
+    </view>
+  </view>
+
+  <!--备注  -->
+  <input class="beizhu_input bc_white" bindinput="getRemark" placeholder="请输入备注"/>
+  <!--付款方式  -->
+  <radio-group class="radio-group pay_way">
+    <label class="radio pay_wayName">
+    <text class="pay_wayNameL">余额支付</text><radio value="" checked  class="pay_wayNameR"/>
+  </label>
+  </radio-group>
+  <view class="footer_box">
+    <button class="all_money" type="primary" bindtap="choosePayWay"> 总计：{{totalPrice}}元，{{totalCount}}件</button>
+  </view>
+ 
+
+  <!-- 支付方式弹窗 -->
+  <view class="modal" wx:if="{{!maskFlag}}">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text>支付方式</text>
+        <button class="close-btn" bindtap="closePayWay">×</button>
+      </view>
+      
+      <!-- 优惠券选择 -->
+      <view class="coupon-section">
+        <view class="section-title">
+          <text>优惠券</text>
+        </view>
+        
+        <picker 
+          mode="selector" 
+          range="{{availableCoupons}}" 
+          range-key="cname"
+          bindchange="handleToSelectedCoupon"
+          wx:if="{{flag}}"
+          >
+          <view class="coupon-selector">
+            <text>{{selectedCoupon ? selectedCoupon.cname : '选择优惠券'}}</text>
+            <text class="arrow">›</text>
+          </view>
+        </picker>
+        
+        <view wx:else class="coupon-selector">
+            <text>暂无可用优惠券</text>
+            <text class="arrow">›</text>
+        </view>
+       
+
+      </view>
+
+      <!-- 支付方式选择 -->
+      <view class="payment-methods">
+        <view class="section-title">
+          <text>支付方式</text>
+        </view>
+        
+        <radio-group bindchange="radioChange">
+          <label class="payment-method" wx:for="{{paymentMethods}}" wx:key="value">
+            <radio value="{{item.value}}" checked="{{item.checked}}"/>
+            <image src="{{item.icon}}"></image>
+            <text>{{item.name}}</text>
+          </label>
+        </radio-group>
+      </view>
+
+      <!-- 金额汇总 -->
+      <view class="amount-summary">
+        <view class="amount-row">
+          <text>商品金额</text>
+          <text>¥{{totalPrice}}</text>
+        </view>
+        <view class="amount-row" wx:if="{{selectedCoupon}}">
+          <text>优惠券折扣</text>
+          <text>-¥{{selectedCoupon.cvalue}}</text>
+        </view>
+        <view class="total-amount" wx:if="{{selectedCoupon}}">
+          <text>应付金额</text>
+          <text class="price">¥{{priceCoupon}}</text>
+        </view>
+        <view class="total-amount" wx:else>
+          <text>应付金额</text>
+          <text class="price">¥{{totalPrice}}</text>
+        </view>
+      </view>
+
+      <!-- 确认支付按钮 -->
+      <button class="confirm-pay-btn" bindtap="submitOrder">确认支付</button>
+    </view>
+  </view>
+
+
+</view>

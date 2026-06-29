@@ -1,0 +1,51 @@
+<!-- 用户信息卡片 -->
+<view class="user-card">
+  <block wx:if="{{isLogin}}">
+    <image src="{{avatarUrl}}" class="user-avatar"/>
+    <view class="user-info">
+      <text class="user-name">{{nickName}}</text>
+      <text class="user-balance">余额：¥{{balance}}</text>
+    </view>
+  </block>
+  <block wx:else>
+    <button class="login-btn" bindtap="handleToLogin" open-type="getUserInfo">
+      <image src="/assets/icons/wechat.png" class="wechat-icon"/>
+      <text>微信一键登录</text>
+    </button>
+  </block>
+</view>
+
+<!-- 功能入口列表 -->
+<view class="menu-list">
+  <navigator class="menu-item" bindtap="handleToPhone">
+    <image src="/assets/icons/service.png" class="menu-icon"/>
+    <text>联系客服</text>
+    <image src="/assets/icons/arrow.png" class="arrow-icon"/>
+  </navigator>
+  
+  <navigator class="menu-item" bindtap="handleToMyComment">
+    <image src="/assets/icons/comment.png" class="menu-icon"/>
+    <text>我的评论</text>
+    <image src="/assets/icons/arrow.png" class="arrow-icon"/>
+  </navigator>
+
+  <view class="menu-item" bindtap="handleToRecharge">
+    <image src="/assets/icons/wallet.png" class="menu-icon"/>
+    <text>钱包充值</text>
+    <image src="/assets/icons/arrow.png" class="arrow-icon"/>
+  </view>
+
+  <view class="menu-item" bindtap="handleToMyCoupon">
+    <image src="/assets/icons/mycoupon.png" class="menu-icon"/>
+    <text>我的优惠券</text>
+    <image src="/assets/icons/arrow.png" class="arrow-icon"/>
+  </view>
+</view>
+
+<!-- 联系客服按钮 -->
+<contact-button 
+  type="default-dark" 
+  size="40" 
+  session-from="weapp"
+  class="custom-service-btn"
+/>

@@ -1,0 +1,64 @@
+<!-- pages/mycoupon/mycoupon.wxml -->
+<view class="coupon-page">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <view class="title">我的优惠券</view>
+  </view>
+
+  <!-- 状态切换导航 -->
+  <view class="tabs">
+    <view 
+      wx:for="{{tabs}}" 
+      wx:key="key" 
+      class="tab-item {{currentTab == item.key ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-key="{{item.key}}"
+    >
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 优惠券列表 -->
+  <view wx:for="{{mycoupon}}" class="coupon-list" wx:if="{{mycoupon.length > 0}}">
+    <view class="coupon-item {{item.status != 'available'?'disabled':''}}">
+      <!-- 左侧金额区域 -->
+      <view class="coupon-left">
+        <text class="price">{{item.coupon.cvalue}}</text>
+        <text class="unit">元</text>
+        <text class="condition">满{{item.coupon.ccondition}}元可用</text>
+      </view>
+      
+      <!-- 右侧信息区域 -->
+      <view class="coupon-right">
+        <text class="name">{{item.coupon.cname}}</text>
+        <text class="time">有效期: {{item.coupon.startTime}} 至 {{item.coupon.endTime}}</text>
+        
+        <!-- 按钮状态 -->
+        <button wx:if="{{item.status == 'available'}}" class="btn">
+            去使用
+        </button>
+        <button wx:if="{{item.status == 'used'}}"
+          class="btn received-btn" disabled>
+        已使用
+        </button>
+        <button wx:if="{{item.status == 'expired'}}"
+          class="btn received-btn" disabled>
+        已过期
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态提示 -->
+  <view class="empty" wx:if="{{mycoupon.length === 0 && isLoading === false}}">
+    <image src="/assets/icons/empty-coupon.png" mode="aspectFit"></image>
+    <text>暂无优惠券</text>
+  </view>
+
+  <!-- 加载提示 -->
+  <view class="loading" wx:if="{{isLoading}}">
+    <image src="/assets/icons/loading.png" mode="aspectFit"></image>
+    <text>加载中...</text>
+  </view>
+
+</view>

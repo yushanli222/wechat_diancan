@@ -1,0 +1,146 @@
+/* pages/coupon/coupon.wxss */
+.coupon-page {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding-bottom: 40rpx;
+  }
+  
+  /* 头部样式 */
+  .header {
+    height: 120rpx;
+    background: linear-gradient(to right, #ff4f4f, #ff2d4b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 36rpx;
+    font-weight: bold;
+  }
+  
+  /* 优惠券列表 */
+  .coupon-list {
+    padding: 20rpx;
+  }
+  
+  /* 单个优惠券样式 */
+  .coupon-item {
+    display: flex;
+    margin-bottom: 20rpx;
+    height: 180rpx;
+    border-radius: 12rpx;
+    overflow: hidden;
+    background: white;
+    position: relative;
+  }
+  
+  /* 禁用状态的优惠券 */
+  .coupon-item.disabled {
+    opacity: 0.7;
+  }
+  
+  /* 优惠券左侧金额区域 */
+  .coupon-left {
+    width: 220rpx;
+    background: linear-gradient(to bottom, #ff4f4f, #ff2d4b);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  
+  .price {
+    font-size: 60rpx;
+    font-weight: bold;
+    line-height: 1;
+  }
+  
+  .unit {
+    font-size: 24rpx;
+    margin-left: 5rpx;
+  }
+  
+  .condition {
+    font-size: 22rpx;
+    margin-top: 10rpx;
+  }
+  
+  /* 优惠券右侧信息区域 */
+  .coupon-right {
+    flex: 1;
+    padding: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .name {
+    font-size: 28rpx;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .time {
+    font-size: 22rpx;
+    color: #999;
+  }
+  
+  /* 按钮样式 */
+  .btn {
+    align-self: flex-end;
+    width: 160rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    font-size: 24rpx;
+    color: white;
+    background: linear-gradient(to right, #ff4f4f, #ff2d4b);
+    border-radius: 30rpx;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 已领取按钮样式 */
+  .received-btn {
+    background: #cccccc !important;
+  }
+  
+  /* 加载状态 */
+  .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40rpx 0;
+  }
+  
+  .loading image {
+    width: 60rpx;
+    height: 60rpx;
+    margin-bottom: 20rpx;
+  }
+  
+  .loading text {
+    font-size: 24rpx;
+    color: #999;
+  }
+  
+  /* 空状态 */
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100rpx 0;
+  }
+  
+  .empty image {
+    width: 200rpx;
+    height: 200rpx;
+    margin-bottom: 30rpx;
+    opacity: 0.6;
+  }
+  
+  .empty text {
+    font-size: 26rpx;
+    color: #999;
+  }

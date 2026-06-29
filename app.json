@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/order/order",
+    "pages/profile/profile",
+    "pages/menu/menu",
+    "pages/recharge/recharge",
+    "pages/confirmOrder/confirmOrder",
+    "pages/mycomment/mycomment",
+    "pages/coupon/coupon",
+    "pages/mycoupon/mycoupon"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "美味餐厅",
+    "navigationBarBackgroundColor": "#ffffff",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle" :"light"
+  },
+  "tabBar": {
+    "selectedColor": "#EE0000",
+    "list": [
+      { 
+        "pagePath": "pages/index/index", 
+        "text": "首页",
+        "iconPath": "/assets/icons/home-active.png",
+        "selectedIconPath": "/assets/icons/home-active.png" 
+      },
+      { 
+        "pagePath": "pages/coupon/coupon", 
+        "text": "优惠券",
+        "iconPath": "/assets/icons/mycoupon.png",
+        "selectedIconPath": "/assets/icons/mycoupon.png" 
+      },
+      { 
+        "pagePath": "pages/order/order", 
+        "text": "订单",
+        "iconPath": "/assets/icons/order.png",
+        "selectedIconPath": "/assets/icons/order.png" 
+      },
+      { 
+        "pagePath": "pages/profile/profile", 
+        "text": "我的",
+        "iconPath": "/assets/icons/profile.png",
+        "selectedIconPath": "/assets/icons/profile.png" 
+      }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

@@ -1,0 +1,162 @@
+<view class="page">
+    <!-- 顶部店家logo -->
+    <view class="weui-panel__bd posi_fiexd">
+        <navigator url="" class="weui-media-box weui-media-box_appmsg new_padd  bc_green" hover-class="none">
+        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:120rpx;height:120rpx">
+            <image class="weui-media-box__thumb bd_radius" src="/assets/icons/hi.jpg" />
+        </view>
+        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+            <view class="weui-media-box__title  color_white">饿了么</view>
+            <view class="weui-media-box__desc color_white">欢迎下单</view>
+        </view>
+        </navigator>
+    </view>
+
+    <!--tab  -->
+    <view class="weui-tab">
+        <!-- 今日菜单的文字内容 -->
+        <view class="weui-navbar tab_style" style="position:fixed;">
+            <block wx:for="{{tabs}}" wx:key="*this">
+                <view id="{{index}}" class="weui-navbar__item padd {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                    <view class="weui-navbar__title">{{item}}</view>
+                </view>
+            </block>
+        </view>
+    </view>
+
+    <view>
+      <!--今日菜单  -->
+      <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+        <!--左侧栏  -->
+        <scroll-view scroll-y class="left-cont">
+          <block class="caixi" wx:key="id" wx:for="{{menu_list}}">
+            <view class="classify  {{curNav == index ? 'active' : ''}}" bindtap="changeRightMenu" data-id="{{index}}">{{item.name}}</view>
+          </block>
+        </scroll-view>
+        <!--右侧栏  -->
+        <scroll-view scroll-y class="right-cont">
+          <!-- AI助手 -->
+          <view class="ai-assistant-float" bindtap="toggleAiDialog">
+            <image src="/assets/icons/ai-icon.png" class="ai-icon-large"></image>
+            <text class="ai-text-float">我是您的点餐助手</text>
+          </view>
+          <block wx:for="{{foodList}}" wx:key="">
+            <view class="weui-panel__bd mb_bottom">
+              <view class="weui-media-box_appmsg bc_white mT" hover-class="none">
+                <view class="weui-media-box__hd img_box">
+                  <image class="weui-media-box__thumb img_box" src="{{item.icon}}" />
+                </view>
+                <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                  <view class="cai_title" data-index="{{index}}">{{item.name}}</view>
+                  <view class="cai_desc" wx:if="{{item.desc == ''}}">暂无介绍</view>
+                  <view class="cai_desc" wx:else>{{item.desc}}</view>
+                  <view class="cai_desc"> 库存：{{item.stock}} </view>
+                  <view class="price-stepper">
+                    <view class="cai_price" data-index="{{index}}">{{item.price}}</view>
+                    <view class="stepper">
+                      <!-- 减号 -->
+                      <view class="iconfont icon-minus2 fontP" hidden="{{item.quantity<=0}}" bindtap="minusCount" data-id="{{item.id}}" data-index="{{index}}"></view>
+                      <!-- 数量 -->
+                      <view class="value" hidden="{{item.quantity<=0}}" data-id="{{item.id}}" data-num="{{item.quantity}}">{{item.quantity}}</view>
+                      <!-- 加号 -->
+                      <view class="iconfont icon-plus1 fontP" data-id="{{item.id}}" hidden="{{item.quantity>=item.stock}}" data-index="{{index}}" bindtap="addCount"></view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+        <!--底部  -->
+        <view class="bottom_box">
+          <view class="shop_cartBox" bindtap="cascadeToggle">
+            <image class="shopCart_img" src="/assets/icons/shopCart.png"></image>
+          </view>
+          <view class="all_money">总计：{{totalPrice}}元，{{totalCount}}件</view>
+          <view class="choose_ok bc_green" bindtap="handleToOrder">选好了</view>
+        </view>
+      </view>   
+    </view>
+
+    <!-- 购物车弹窗遮罩层 -->
+    <view class="modal-mask" wx:if="{{showCartPopup}}" bindtap="closeCartPopup"></view>
+
+    <!-- 购物车弹窗 -->
+    <view class="cart_popup {{showCartPopup ? 'show' : ''}}" wx:if="{{showCartPopup}}">
+      <view class="cart-header">
+        <text class="cart-title">购物车</text>
+        <text class="cart-clear" bindtap="clearCart">清空</text>
+      </view>
+      <scroll-view scroll-y class="cart-list">
+        <view class="cart-item" wx:for="{{cartList}}" wx:key="id">
+          <image src="{{item.icon}}" class="cart-item-img"/>
+          <view class="cart-item-detail">
+            <text class="cart-item-name">{{item.name}}</text>
+            <text class="cart-item-desc">{{item.desc}}</text>
+            <text class="cart-item-price">¥{{item.price}}</text>
+          </view>
+          <view class="cart-item-control">
+            <text class="cart-minus" bindtap="minusCartItem" data-index="{{index}}">-</text>
+            <text class="cart-quantity">{{item.quantity}}</text>
+            <text class="cart-plus" bindtap="addCartItem" data-index="{{index}}">+</text>
+          </view>
+        </view>
+        <view class="cart-empty" wx:if="{{cartList.length === 0}}">
+          <text>购物车是空的</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- AI助手弹窗遮罩层 -->
+    <view class="ai-modal-mask" wx:if="{{showAiDialog}}" bindtap="toggleAiDialog"></view>
+
+    <!-- AI助手对话框 -->
+    <view class="ai-dialog {{showAiDialog ? 'show' : ''}}" wx:if="{{showAiDialog}}">
+      <view class="ai-dialog-header">
+        <view class="ai-header-left">
+          <image src="/assets/icons/ai-icon.png" class="ai-header-icon"></image>
+          <text class="ai-header-title">AI智能点餐系统</text>
+        </view>
+        <view class="ai-close-btn" bindtap="toggleAiDialog">×</view>
+      </view>
+
+      <scroll-view scroll-y class="ai-message-list" scroll-into-view="ai-scroll-bottom" scroll-with-animation>
+        <!-- 消息列表 -->
+        <block wx:for="{{aiMessages}}" wx:key="index">
+          <!-- AI消息 -->
+          <view class="ai-message ai-message-bot" wx:if="{{item.type == 'bot'}}">
+            <image src="/assets/icons/ai-icon.png" class="ai-avatar"></image>
+            <view class="ai-message-content">
+              <text>{{item.content}}</text>
+              <text class="typing-cursor" wx:if="{{aiLoading && index == aiMessages.length - 1}}">|</text>
+            </view>
+          </view>
+          <!-- 用户消息 -->
+          <view class="ai-message ai-message-user" wx:else>
+            <view class="ai-message-content-user">
+              <text>{{item.content}}</text>
+            </view>
+          </view>
+        </block>
+
+        <!-- 加载中提示 -->
+        <view class="ai-loading" wx:if="{{aiLoading && aiMessages.length > 0 && aiMessages[aiMessages.length - 1].content === ''}}">
+          <view class="ai-loading-dots">
+            <view class="dot"></view>
+            <view class="dot"></view>
+            <view class="dot"></view>
+          </view>
+          <text class="loading-text">AI思考中...</text>
+        </view>
+
+        <!-- 滚动锚点 -->
+        <view id="ai-scroll-bottom"></view>
+      </scroll-view>
+
+      <view class="ai-input-area">
+        <input class="ai-input" placeholder="输入您的问题..." bindinput="handleAiInput" value="{{aiInput}}" confirm-type="send" bindconfirm="sendAiMessage"/>
+        <button class="ai-send-btn" bindtap="sendAiMessage" disabled="{{aiLoading}}">{{aiLoading ? '发送中...' : '发送'}}</button>
+      </view>
+    </view>
+
+</view>

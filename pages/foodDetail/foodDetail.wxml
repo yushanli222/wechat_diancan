@@ -1,0 +1,73 @@
+<!--pages/foodDetail/foodDetail.wxml-->
+<view class="food-detail-page">
+  <!-- 顶部导航 -->
+  <view class="nav-header">
+    <view class="nav-back" bindtap="goBack">
+      <text class="back-icon">‹</text>
+    </view>
+    <text class="nav-title">菜品详情</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{isLoading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 菜品信息 -->
+  <view class="food-content" wx:if="{{!isLoading}}">
+    <!-- 菜品图片 -->
+    <view class="food-image-container">
+      <image src="{{food.imgPath}}" class="food-image" mode="aspectFill"/>
+    </view>
+
+    <!-- 菜品基本信息 -->
+    <view class="food-info">
+      <view class="food-header">
+        <text class="food-name">{{food.fname}}</text>
+        <text class="food-kind">{{food.fkind}}</text>
+      </view>
+      
+      <view class="price-row">
+        <text class="price-symbol">¥</text>
+        <text class="price-value">{{food.price}}</text>
+        <text class="storage-info">库存: {{food.storage}}份</text>
+      </view>
+
+      <text class="food-intro">{{food.intro}}</text>
+    </view>
+
+    <!-- 数量选择 -->
+    <view class="quantity-section">
+      <text class="section-label">购买数量</text>
+      <view class="quantity-control">
+        <view class="qty-btn minus" bindtap="decreaseQty">
+          <text>−</text>
+        </view>
+        <text class="qty-value">{{quantity}}</text>
+        <view class="qty-btn plus" bindtap="increaseQty">
+          <text>+</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 合计金额 -->
+    <view class="total-section">
+      <text class="total-label">合计</text>
+      <view class="total-price">
+        <text class="total-symbol">¥</text>
+        <text class="total-value">{{food.price * quantity}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="action-btn secondary" bindtap="addToCart">
+      <text>加入购物车</text>
+    </view>
+    <view class="action-btn primary" bindtap="buyNow">
+      <text>立即购买</text>
+    </view>
+  </view>
+</view>

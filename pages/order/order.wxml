@@ -1,0 +1,113 @@
+<!--导航条-->
+<view class="navbar">
+  <view wx:for="{{navbar}}" bindtap="changeOrderStatus" data-idx="{{index}}" class="item {{currentIndex==index ? 'active' : ''}}" wx:key="unique">
+    <text>{{item}}</text>
+  </view>
+</view>
+
+<view wx:if="{{orderList && orderList.length > 0}}">
+  <!-- 订单卡片 -->
+  <view wx:for="{{orderList}}" wx:key="oid" class='cont_count'>
+    <!-- 订单头部 -->
+    <view class='seria'>
+      <view class='seriac_name'>
+        订单编号: <text>{{item.oid}}</text>
+      </view>
+      <view class='seriac_start'>{{item.tableId}}号桌</view>
+    </view>
+    <view class="order-time" wx:if="{{item.createTime}}">
+      <text>{{item.createTime}}</text>
+    </view>
+
+    <!-- 菜品列表 -->
+    <view class='list' wx:for="{{item.orderDetailList}}" wx:for-item="detail" wx:key="did">
+      <image class='list_img' src='{{detail.foodIcon}}' mode="aspectFill"></image>
+      <view class="list_info">
+        <text class='list_name'>{{detail.foodName}}</text>
+        <text class="list_quantity">x{{detail.foodQuantity}}</text>
+      </view>
+      <text class='list_money'>¥{{detail.price}}</text>
+    </view>
+
+    <!-- 订单金额 -->
+    <view class='count_eg'>
+      <view class='cont_cen_money'>
+        合计: <text class='cont_ce_mon'>¥{{item.totalPrice}}</text>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view wx:if="{{item.status!=2}}" class='coent_list'>
+      <view wx:if="{{item.status==0}}" class='coent_del' data-oid='{{item.oid}}' bindtap='cancleOrder'>取消订单</view>
+      <view wx:if="{{item.status==0}}" class='coent_log_base' data-oid='{{item.oid}}' data-totalPrice="{{item.totalPrice}}" bindtap='clickGoPay'>去支付</view>
+      <view wx:if="{{item.status==3}}" class='coent_log_base' data-item='{{item}}' bindtap='goComment'>去评价</view>
+      <view wx:if="{{item.status==4}}" class='coent_log_base' data-item='{{item}}' bindtap='checkComment'>查看评价</view>
+    </view>
+  </view>
+</view>
+
+<!-- 空状态 -->
+<view wx:if="{{!orderList || orderList.length == 0}}" class='none_tab'>
+  <text>暂无订单数据</text>
+</view>
+
+<!-- 评价弹窗 -->
+<view wx:if="{{isShowComment}}" class="comment-mask" bindtap="cancelComment">
+  <view class="comment-popup" catchtap="stopPropagation">
+    <view class="popup-header">
+      <text>发表评价</text>
+    </view>
+
+    <!-- 评价内容输入 -->
+    <textarea 
+      class="comment-input"
+      placeholder="请输入您的评价（至少10个字）"
+      placeholder-class="placeholder-style"
+      maxlength="200"
+      bindinput="getComment"
+    ></textarea>
+
+    <!-- 星级评分 -->
+    <view class="star-rating">
+      <block wx:for="{{5}}" wx:key="index">
+        <image 
+          src="{{index < rating ? '/assets/icons/star-full.png' : '/assets/icons/star-empty.png'}}"
+          class="star-icon"
+          bindtap="setRating"
+          data-rating="{{index + 1}}"
+        />
+      </block>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <view class="cancel-btn" bindtap="cancelComment">取消</view>
+      <view class="submit-btn" bindtap="submitComment">确定</view>
+    </view>
+  </view>
+</view>
+
+<!-- 支付弹窗 -->
+<view hidden="{{maskFlag}}">
+  <view class="modal-mask" bindtap="closePayWay"></view>
+  <view animation="{{animationData}}" class="cart_popup">
+    <view class="shopcart_title">
+      选择支付方式
+      <text class="shopcart_close" bindtap="closePayWay">关闭</text>
+    </view>
+    <view class="cart_cells {{selectedPayWay == item.value ? 'selected' : ''}}" wx:for="{{payWayList}}" wx:key="value" bindtap="selectPayWay" data-value="{{item.value}}">
+      <image class="pay-icon" src="{{item.icon}}" mode="aspectFit"></image>
+      <text class="cells_name">{{item.name}}</text>
+      <view class="check-box">
+        <view class="check-circle {{selectedPayWay == item.value ? 'checked' : ''}}">
+          <text wx:if="{{selectedPayWay == item.value}}">✓</text>
+        </view>
+      </view>
+    </view>
+    <view class="pay-btn-area">
+      <view class="pay-submit-btn {{selectedPayWay ? 'active' : ''}}" bindtap="submitOrder">
+        确认支付 ¥{{totalPrice}}
+      </view>
+    </view>
+  </view>
+</view>
