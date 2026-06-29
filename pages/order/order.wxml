@@ -11,7 +11,7 @@
     <!-- 订单头部 -->
     <view class='seria'>
       <view class='seriac_name'>
-        订单编号: <text>{{item.oid}}</text>
+        订单名称编号: <text>{{item.oid}}</text>
       </view>
       <view class='seriac_start'>{{item.tableId}}号桌</view>
     </view>
